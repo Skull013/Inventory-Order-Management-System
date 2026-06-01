@@ -1,0 +1,232 @@
+.dashboard-container {
+  position: relative;
+  min-height: calc(100vh - 200px);
+}
+
+/* Welcome Section */
+.dashboard-welcome {
+  margin-bottom: 2rem;
+}
+
+.welcome-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+/* Stats Cards Grid */
+.stats-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.stat-card-simple {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card-simple::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  transition: all 0.3s ease;
+}
+
+.stat-card-simple:nth-child(1)::before {
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+}
+
+.stat-card-simple:nth-child(2)::before {
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+}
+
+.stat-card-simple:nth-child(3)::before {
+  background: linear-gradient(90deg, #ec4899, #db2777);
+}
+
+.stat-card-simple:nth-child(4)::before {
+  background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.stat-card-simple:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.stat-card-simple:hover::before {
+  height: 4px;
+}
+
+.stat-value-large {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-card-simple:nth-child(1) .stat-value-large {
+  color: #3b82f6;
+}
+
+.stat-card-simple:nth-child(2) .stat-value-large {
+  color: #8b5cf6;
+}
+
+.stat-card-simple:nth-child(3) .stat-value-large {
+  color: #ec4899;
+}
+
+.stat-card-simple:nth-child(4) .stat-value-large {
+  color: #10b981;
+}
+
+.stat-label-simple {
+  color: #64748b;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.dashboard-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 1rem;
+}
+
+.card-header-with-badge {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.badge-count {
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #dc2626;
+  padding: 0.3rem 0.85rem;
+  border-radius: 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid #fca5a5;
+}
+
+.card-content-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #94a3b8;
+  font-size: 0.875rem;
+  background: linear-gradient(135deg, #f8fafc, #fff);
+  border-radius: 8px;
+  border: 1px dashed #e2e8f0;
+}
+
+/* Low Stock List */
+.low-stock-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.low-stock-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, #fef2f2, #fff);
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  transition: all 0.2s ease;
+}
+
+.low-stock-item:hover {
+  border-color: #fca5a5;
+  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.1);
+  transform: translateX(4px);
+}
+
+.low-stock-info {
+  flex: 1;
+}
+
+.product-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 0.25rem;
+}
+
+.product-sku {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+.stock-quantity {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #dc2626;
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  padding: 0.3rem 0.75rem;
+  border-radius: 12px;
+  border: 1px solid #fca5a5;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .stats-cards-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 1.5rem;
+  }
+
+  .stats-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .stat-value-large {
+    font-size: 1.75rem;
+  }
+}
