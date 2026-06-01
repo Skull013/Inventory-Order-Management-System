@@ -7,6 +7,7 @@ function Customers() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [phoneError, setPhoneError] = useState('');
   const [formData, setFormData] = useState({
     full_name: '',
     email: '',
@@ -31,21 +32,45 @@ function Customers() {
     }
   };
 
+  const validatePhone = (phone) => {
+    const phoneRegex = /^[6-9]\d{9}$/;
+    return phoneRegex.test(phone);
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+
+    if (name === 'phone') {
+      const numeric = value.replace(/\D/g, '').slice(0, 10);
+      setFormData(prev => ({ ...prev, phone: numeric }));
+
+      if (numeric.length > 0 && numeric.length < 10) {
+        setPhoneError(`${10 - numeric.length} more digit(s) required`);
+      } else if (numeric.length === 10 && !validatePhone(numeric)) {
+        setPhoneError('Number must start with 6, 7, 8, or 9');
+      } else {
+        setPhoneError('');
+      }
+      return;
+    }
+
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validatePhone(formData.phone)) {
+      setPhoneError('Please enter a valid 10-digit Indian mobile number');
+      return;
+    }
+
     try {
       await createCustomer(formData);
       setSuccess('Customer created successfully');
       setShowModal(false);
       setFormData({ full_name: '', email: '', phone: '' });
+      setPhoneError('');
       fetchCustomers();
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
@@ -70,12 +95,14 @@ function Customers() {
 
   const openAddModal = () => {
     setFormData({ full_name: '', email: '', phone: '' });
+    setPhoneError('');
     setShowModal(true);
   };
 
   const closeModal = () => {
     setShowModal(false);
     setFormData({ full_name: '', email: '', phone: '' });
+    setPhoneError('');
   };
 
   if (loading) {
@@ -187,11 +214,22 @@ function Customers() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
+                  placeholder="10-digit mobile number"
+                  maxLength={10}
                   required
                 />
+                {phoneError && (
+                  <span style={{ color: '#e53e3e', fontSize: '0.8rem', marginTop: '4px', display: 'block' }}>
+                    ⚠️ {phoneError}
+                  </span>
+                )}
               </div>
               <div className="form-actions">
-                <button type="submit" className="btn btn-primary">
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  disabled={!!phoneError || formData.phone.length !== 10}
+                >
                   Create
                 </button>
                 <button
